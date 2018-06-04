@@ -1,0 +1,43 @@
+﻿<Window x:Class="NOocx.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NOocx"
+        xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:emgu ="clr-namespace:Emgu.CV.UI;assembly=Emgu.CV.UI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <!--<DockPanel>
+            --><!--菜单栏Visibility="Collapsed"--><!--
+            <Menu DockPanel.Dock="Top"  x:Name="menubar">
+                <MenuItem Header="视频源" x:Name="videoSource" Click="videoSource_Click"></MenuItem>
+                <MenuItem Header="分辨率" x:Name="mediaType"></MenuItem>
+                <MenuItem x:Name="SettingsItem" Header="设置">
+                    <MenuItem Header="OCX修复" />
+                    <MenuItem x:Name="IsDebug" Header="日志输出"  IsCheckable="True"/>
+                    <MenuItem x:Name="CheckPage" Header="是否检查图片页数"  IsCheckable="True"/>
+                </MenuItem>
+                <MenuItem x:Name="AboutItem" Header="关于">
+                    <MenuItem x:Name="VersionInfo" Header=""/>
+                </MenuItem>
+            </Menu>
+            --><!--工具栏--><!--
+            <ToolBar DockPanel.Dock="Top" Height="30">
+                <Button Content="视频源">
+                </Button>
+                <Button Content="分辨率">
+                </Button>
+                <Button>
+                    --><!--<Image Source="images/sdlmame.ico"></Image>--><!--
+                </Button>
+            </ToolBar>
+            <DockPanel>
+                <WindowsFormsHost>
+                    <emgu:ImageBox x:Name="captureImageBox"></emgu:ImageBox>
+                </WindowsFormsHost>
+            </DockPanel>
+        </DockPanel>-->
+    </Grid>
+</Window>
