@@ -1,0 +1,14 @@
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\bin\Debug\OptypeSyncUtil.exe.config
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\bin\Debug\OptypeSyncUtil.exe
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\bin\Debug\OptypeSyncUtil.pdb
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil.csprojResolveAssemblyReference.cache
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\MainWindow.g.cs
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\App.g.cs
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil_MarkupCompile.cache
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil_MarkupCompile.lref
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\MainWindow.baml
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil.g.resources
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil.Properties.Resources.resources
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil.csproj.GenerateResource.Cache
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil.exe
+D:\meta666\C#\demo\OptypeSyncUtil\OptypeSyncUtil\obj\Debug\OptypeSyncUtil.pdb
