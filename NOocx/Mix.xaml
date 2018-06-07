@@ -24,8 +24,9 @@
             <ComboBox Width="150" Text="视频源" x:Name="videoMenu" SelectionChanged="videoMenu_SelectionChanged"></ComboBox>
             <!--<Label Content="分辨率:"></Label>-->
             <ComboBox Width="100" Text="分辨率" x:Name="mediaType" SelectionChanged="mediaType_SelectionChanged"/>
-            <Label x:Name="currfileName" MaxWidth="150">
-            </Label>
+            <Label x:Name="currfileName" MaxWidth="150"></Label>
+            <Button Content="+" Click="zoomasc_Click" Name="zoomasc" Visibility="Collapsed"></Button>
+            <Button Content="-" Name="zoomdesc" Click="zoomdesc_Click" Visibility="Collapsed"></Button>
         </DockPanel>
 
         <Grid Grid.Row="1">
@@ -37,7 +38,10 @@
             <WindowsFormsHost x:Name="wfhost">
                 <aforge:VideoSourcePlayer x:Name="videoPlayer"></aforge:VideoSourcePlayer>
             </WindowsFormsHost>
-            <Image x:Name="canvas" HorizontalAlignment="Left" VerticalAlignment="Top" Width="287" Height="218" Visibility="Collapsed"/>
+            <!--<Image x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Visibility="Collapsed"/>-->
+            <WindowsFormsHost Visibility="Hidden" x:Name="canvashost">
+                <aforge:PictureBox x:Name="canvas"></aforge:PictureBox>
+            </WindowsFormsHost>
             <StackPanel Orientation="Vertical" Grid.Column="1" Background="AliceBlue">
                 <Button Content="采集"  Width="40" Height="30" Click="Capture_Click"></Button>
                 <Button Content="采集"  Height="30"></Button>
@@ -46,15 +50,6 @@
             </StackPanel>
         </Grid>
 
-        <!--<Grid Grid.Row="2" HorizontalAlignment="Left">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Image Width="60" Height="40" x:Name="image1" MouseLeftButtonDown="image1_MouseLeftButtonDown" ToolTip="testtttttt"></Image>
-            
-            <Image Width="60" Height="40" x:Name="image2" MouseLeftButtonDown="image1_MouseLeftButtonDown" ToolTip="testtttttt" Grid.Column="1"></Image>
-        </Grid>-->
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" ScrollChanged="ScrollViewer_ScrollChanged">
         <StackPanel Orientation="Horizontal"  Background="AliceBlue" Name="bottom_image">
             <!--<Grid>

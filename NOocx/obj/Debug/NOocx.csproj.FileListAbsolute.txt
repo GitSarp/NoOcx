@@ -36,3 +36,5 @@ D:\meta666\C#\demo\NOocx\NOocx\bin\Debug\AForge.Video.DirectShow.xml
 D:\meta666\C#\demo\NOocx\NOocx\bin\Debug\AForge.Math.xml
 D:\meta666\C#\demo\NOocx\NOocx\obj\Debug\Mix.g.cs
 D:\meta666\C#\demo\NOocx\NOocx\obj\Debug\Mix.baml
+D:\meta666\C#\demo\noocx\NOocx\bin\Debug\AForge.Imaging.Formats.dll
+D:\meta666\C#\demo\noocx\NOocx\bin\Debug\AForge.Imaging.Formats.xml

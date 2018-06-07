@@ -44,6 +44,9 @@
     <Reference Include="AForge.Imaging">
       <HintPath>..\..\..\..\opencv\AForge.NET Framework-2.2.5\Release\AForge.Imaging.dll</HintPath>
     </Reference>
+    <Reference Include="AForge.Imaging.Formats">
+      <HintPath>..\..\..\..\opencv\AForge.NET Framework-2.2.5\Release\AForge.Imaging.Formats.dll</HintPath>
+    </Reference>
     <Reference Include="AForge.Video">
       <HintPath>..\..\..\..\opencv\AForge.NET Framework-2.2.5\Release\AForge.Video.dll</HintPath>
     </Reference>
