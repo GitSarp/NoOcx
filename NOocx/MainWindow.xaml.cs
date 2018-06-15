@@ -1,4 +1,5 @@
-﻿using DirectShowLib;
+﻿using AForge.Video.DirectShow;
+using DirectShowLib;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using System;
@@ -25,197 +26,80 @@ namespace NOocx
     /// </summary>
     public partial class MainWindow : Window
     {
-        private VideoCapture _capture = null;
-        private Mat _frame;
-        private List<DsDevice> deviceList=new List<DsDevice>();//视频设备列表
-        private int deviceIndex=0;//当前设备索引
-        private int resolutionIndex=0;//当前分辨率索引
-        private static List<Point> allResolution=new List<Point>();//所有分辨率
+        //static FilterInfoCollection videoDevices;//所有可用摄像头
+        //private string currVideoName = "不可用";//当前摄像头名称，初始化不可用。
+        //private VideoCaptureDevice videoSource;//当前摄像头
+        //private int videoIndex = 0;//摄像头索引,用于选中菜单项
+        //private int resolutionIndex = 0;//分辨率索引
+        //private Dictionary<string, VideoCaptureDevice> videodatasource = new Dictionary<string, VideoCaptureDevice>();//存储所有摄像头实例
+
+        //private List<ScanImage> fileList = new List<ScanImage>();//采集项列表
+        //private int currFileIndex = 0;//选中的采集项索引，默认第一项
+        //private List<System.Windows.Controls.Image> thumbnaillist = new List<System.Windows.Controls.Image>();//底部缩略图列表
+        //private List<Label> lablelist = new List<Label>();//底部缩略图列表
+        //private Dictionary<int, List<Bitmap>> imageMemorys = new Dictionary<int, List<Bitmap>>();//所有图像缓存，<image_no,bitmaplist>
+        //private BitmapImage myBitmapImage = new BitmapImage();//选中的图像缓存
+
+        //ScanIni scanIni;
+        //string url;//请求xml的主机
+        //string token;//获取xml的key
+        //string singlePath = System.Windows.Forms.Application.StartupPath + "\\ScanSinglePr";
+        //ScanInfo scanInfo = new ScanInfo(); //xml对应实体类
+        //ScanDownload scanDownload = new ScanDownload();//下载类
+        //Boolean errorOccurs = false;//发生异常标志
 
         public MainWindow()
         {
             InitializeComponent();
 
-            Mix mix = new Mix();
-            mix.Show();
+            //和业务太紧密了，一个简单的，应该是一个可以对接标准接口的工具
+            //Mix mix = new Mix();
+            //mix.Show();
 
-            //    CvInvoke.UseOpenCL = false;
-            //    try
-            //    {
-            //        _capture = new VideoCapture();
-            //        _capture.ImageGrabbed += ProcessFrame;
-            //    }
-            //    catch (NullReferenceException excpt)
-            //    {
-            //        MessageBox.Show(excpt.Message);
-            //    }
-            //    _frame = new Mat();//视频桢
 
-            //    //开启摄像头
-            //    if (_capture != null)
-            //    {
-            //        _capture.Start();
-            //    }
-
-            //    GetVideoInputDevice();//获取所有摄像设备
-            //    for (int i=0;i< deviceList.Count;i++)
-            //    {
-            //        MenuItem mi = new MenuItem();
-            //        mi.Header = deviceList[i].Name;
-            //        //保存配置
-            //        if(i==deviceIndex)
-            //            mi.IsChecked = true;
-            //        //mi.Click += test;
-            //        videoSource.Items.Add(mi);
-            //    }
-            //    GetAllAvailableResolution(deviceList[deviceIndex]);
-            //    for (int i = 0; i < allResolution.Count; i++)
-            //    //foreach (var tmp in GetAllAvailableResolution(deviceList[resolutionIndex]))
-            //    {
-            //        MenuItem mi = new MenuItem();
-            //        mi.Header = allResolution[i].X+"x"+ allResolution[i].Y;
-            //        //保存配置
-            //        if (i == resolutionIndex)
-            //            mi.IsChecked = true;
-            //        //mi.Click += test;
-            //        mediaType.Items.Add(mi);
-            //        //保存配置
-            //    }
-            //    //MessageBox.Show(string.Join(",", GetVideoInputDevice().ToArray()));
-            //    //MessageBox.Show(_capture.GetCaptureProperty(CapProp.FrameHeight) +"");
+            allImages.Add("D:\\2.jpg"); allImages.Add("D:\\2.jpg"); allImages.Add("D:\\2.jpg"); allImages.Add("D:\\2.jpg");
+            allImages.Add("D:\\2.jpg"); allImages.Add("D:\\2.jpg"); allImages.Add("D:\\2.jpg"); allImages.Add("D:\\2.jpg");
+            foreach (string tmp in allImages)
+            {
+                AddImg(tmp);
+            }
         }
 
-        ////获取所有视频设备
-        //public ArrayList GetVideoInputDevice()
-        //{ return GetDeviceCollection(FilterCategory.VideoInputDevice); }
-        //private ArrayList GetDeviceCollection(Guid DeviceType)
-        //{
-        //    ArrayList returnString = new ArrayList();
-        //    foreach (DsDevice ds in DsDevice.GetDevicesOfCat(DeviceType))
-        //    {
-        //        //returnString.Add(ds.Name);
-        //        deviceList.Add(ds);
-        //    }
-        //    return returnString;
-        //}
-        ////获取设备所有分辨率
-        //public static List<Point> GetAllAvailableResolution(DsDevice vidDev)
-        //{
-        //    try
-        //    {
-        //        int hr;
-        //        int max = 0;
-        //        int bitCount = 0;
+        public List<string> allImages = new List<string>();
+        public void AddImg(string szPath)
+        {
+            System.Windows.Controls.Image listImage = new System.Windows.Controls.Image(); //创建一个Image控件
+            Border br = new Border();
+            BitmapImage bitmapImage = new BitmapImage();
+            ListBoxItem newListBox = new ListBoxItem(); //创建一个ListBoxItem，作为ListBox的元素
+            bitmapImage.BeginInit();
+            //bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.UriSource = new Uri(szPath);
+            bitmapImage.EndInit();
+            //bitmapImage.Freeze();
+            listImage.Source = bitmapImage;
+            //设置border的高、宽、圆角
+            br.Width = 106;
+            br.Height = 106;
+            br.CornerRadius = new CornerRadius(10);
+            //Label PicLabel = new Label();//鼠标移到图片上显示图片的名称 
+            //Image添加到Border中 
+            br.Child = listImage;
+            br.Padding = new System.Windows.Thickness((float)1.1f);
+            br.Background = System.Windows.Media.Brushes.White;
+            br.BorderThickness = new System.Windows.Thickness((int)3);
 
-        //        IBaseFilter sourceFilter = null;
+            newListBox.Content = br;
+            newListBox.Margin = new System.Windows.Thickness((int)10);
+            newListBox.DataContext = szPath;
+            list1.Items.Add(newListBox); //list1为界面上ListBox控件的名称
+            list1.SelectedIndex = list1.Items.Count - 1;
+            scrolls.ScrollToRightEnd(); //使得滚动条 滚到最后， scrolls为ScrollViewer控件的名称
+        }
 
-        //        var m_FilterGraph2 = new FilterGraph() as IFilterGraph2;
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
 
-        //        hr = m_FilterGraph2.AddSourceFilterForMoniker(vidDev.Mon, null, vidDev.Name, out sourceFilter);
-
-        //        var pRaw2 = DsFindPin.ByCategory(sourceFilter, PinCategory.Capture, 0);
-
-        //        var AvailableResolutions = new List<Point>();
-
-        //        VideoInfoHeader v = new VideoInfoHeader();
-        //        IEnumMediaTypes mediaTypeEnum;
-        //        hr = pRaw2.EnumMediaTypes(out mediaTypeEnum);
-
-        //        AMMediaType[] mediaTypes = new AMMediaType[1];
-        //        IntPtr fetched = IntPtr.Zero;
-        //        hr = mediaTypeEnum.Next(1, mediaTypes, fetched);
-
-        //        while (fetched != null && mediaTypes[0] != null)
-        //        {
-        //            Marshal.PtrToStructure(mediaTypes[0].formatPtr, v);
-        //            if (v.BmiHeader.Size != 0 && v.BmiHeader.BitCount != 0)
-        //            {
-        //                if (v.BmiHeader.BitCount > bitCount)
-        //                {
-        //                    AvailableResolutions.Clear();
-        //                    //
-        //                    allResolution.Clear();
-        //                    max = 0;
-        //                    bitCount = v.BmiHeader.BitCount;
-
-
-        //                }
-        //                AvailableResolutions.Add(new Point(v.BmiHeader.Width, v.BmiHeader.Height));
-        //                //
-        //                allResolution.Add(new Point(v.BmiHeader.Width, v.BmiHeader.Height));
-        //                if (v.BmiHeader.Width > max || v.BmiHeader.Height > max)
-        //                    max = (Math.Max(v.BmiHeader.Width, v.BmiHeader.Height));
-        //            }
-        //            hr = mediaTypeEnum.Next(1, mediaTypes, fetched);
-        //        }
-        //        return AvailableResolutions;
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        //Log(ex);
-        //        return new List<Point>();
-        //    }
-        //}
-
-        ////显示视频
-
-        //private void ProcessFrame(object sender, EventArgs arg)
-        //{
-        //    if (_capture != null && _capture.Ptr != IntPtr.Zero)
-        //    {
-        //        _capture.Retrieve(_frame, 0);
-        //        captureImageBox.Image = _frame;
-        //        //CvInvoke.CvtColor(_frame, _grayFrame, ColorConversion.Bgr2Gray);
-        //        //CvInvoke.PyrDown(_grayFrame, _smallGrayFrame);
-        //        //CvInvoke.PyrUp(_smallGrayFrame, _smoothedGrayFrame);
-        //        //CvInvoke.Canny(_smoothedGrayFrame, _cannyFrame, 100, 60);
-        //    }
-        //}
-
-
-        ////隐藏/显示菜单栏
-        //private void menu_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    menubar.Visibility = Visibility.Visible;
-        //}
-
-        //private void menu_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    menubar.Visibility = Visibility.Collapsed;
-        //}
-
-        //private void menu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        //{
-        //    menubar.Visibility = Visibility.Visible;
-        //}
-
-        //private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
-        //    {
-        //        if (menubar.Visibility != Visibility.Visible) menubar.Visibility = Visibility.Visible;
-        //    }
-        //}
-
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-        //private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    if (_capture != null)
-        //    {
-        //        _capture.Stop();
-        //        _capture.Dispose();
-        //    }
-        //}
-
-        ////切换视频设备
-        //private void videoSource_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
+        }
     }
 }

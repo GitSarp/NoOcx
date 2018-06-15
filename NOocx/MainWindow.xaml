@@ -6,38 +6,106 @@
         xmlns:local="clr-namespace:NOocx"
         xmlns:wfi ="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         xmlns:emgu ="clr-namespace:Emgu.CV.UI;assembly=Emgu.CV.UI"
+        xmlns:aforge ="clr-namespace:AForge.Controls;assembly=AForge.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="800" Loaded="Window_Loaded">
+
+    <!--<Window.Resources>
+        <Style TargetType="{x:Type ListBox}" x:Key="PhotoListBoxStyle">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}" >
+                        <WrapPanel Margin="5" IsItemsHost="True" Orientation="Horizontal" ItemHeight="{Binding ElementName=ZoomSlider, Path='Value'}" ItemWidth="{Binding ElementName=ZoomSlider, Path='Value'}" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>-->
     <Grid>
-        <!--<DockPanel>
-            --><!--菜单栏Visibility="Collapsed"--><!--
-            <Menu DockPanel.Dock="Top"  x:Name="menubar">
-                <MenuItem Header="视频源" x:Name="videoSource" Click="videoSource_Click"></MenuItem>
-                <MenuItem Header="分辨率" x:Name="mediaType"></MenuItem>
-                <MenuItem x:Name="SettingsItem" Header="设置">
-                    <MenuItem Header="OCX修复" />
-                    <MenuItem x:Name="IsDebug" Header="日志输出"  IsCheckable="True"/>
-                    <MenuItem x:Name="CheckPage" Header="是否检查图片页数"  IsCheckable="True"/>
-                </MenuItem>
-                <MenuItem x:Name="AboutItem" Header="关于">
-                    <MenuItem x:Name="VersionInfo" Header=""/>
-                </MenuItem>
-            </Menu>
-            --><!--工具栏--><!--
-            <ToolBar DockPanel.Dock="Top" Height="30">
-                <Button Content="视频源">
-                </Button>
-                <Button Content="分辨率">
-                </Button>
-                <Button>
-                    --><!--<Image Source="images/sdlmame.ico"></Image>--><!--
-                </Button>
-            </ToolBar>
-            <DockPanel>
-                <WindowsFormsHost>
-                    <emgu:ImageBox x:Name="captureImageBox"></emgu:ImageBox>
-                </WindowsFormsHost>
-            </DockPanel>
-        </DockPanel>-->
+
+        <!--<ListBox x:Name="lst"  Grid.Column="1"  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Focusable="False">
+                        <Image Source="D:\2.jpg" Tag="{Binding ImageIndex}"  Width="150" Height="150">
+                        </Image>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>-->
+
+        <ScrollViewer Panel.ZIndex="1" Name="scrolls"  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Margin="-103,135,117,0" MaxWidth="560" Height="174" VerticalAlignment="Top" Canvas.Left="463" Canvas.Top="158" Width="778" HorizontalAlignment="Center" HorizontalContentAlignment="Center">
+            <!--SelectionChanged="list1_SelectionChanged" UIElement.MouseWheel="ImageList_MouseWheel"-->
+            <ListBox IsSynchronizedWithCurrentItem="True" Name="list1" SelectionMode="Extended" SelectedIndex="-1" Height="150" Width="401">
+                <!--<ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Style.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Blue" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Blue" Opacity=".3"/>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="White" />
+                        </Style.Resources>
+                    </Style>
+                </ListBox.Resources>-->
+            </ListBox>
+        </ScrollViewer>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel DockPanel.Dock="Top"  x:Name="menubar" HorizontalAlignment="Stretch" Background="AliceBlue">
+            -->
+        <!--<Label Content="视频源:"></Label>-->
+        <!--
+            <ComboBox Width="150" Text="视频源" x:Name="videoMenu" SelectionChanged="videoMenu_SelectionChanged"></ComboBox>
+            -->
+        <!--<Label Content="分辨率:"></Label>-->
+        <!--
+            <ComboBox Width="100" Text="分辨率" x:Name="mediaType" SelectionChanged="mediaType_SelectionChanged"/>
+            <Label x:Name="currfileName" MaxWidth="150"></Label>
+            <Button Content="+" Click="zoomasc_Click" Name="zoomasc" Visibility="Collapsed"></Button>
+            <Button Content="-" Name="zoomdesc" Click="zoomdesc_Click" Visibility="Collapsed"></Button>
+        </DockPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <WindowsFormsHost x:Name="wfhost">
+                <aforge:VideoSourcePlayer x:Name="videoPlayer"></aforge:VideoSourcePlayer>
+            </WindowsFormsHost>
+            -->
+        <!--<Image x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Visibility="Collapsed"/>-->
+        <!--
+            <WindowsFormsHost Visibility="Hidden" x:Name="canvashost">
+                <aforge:PictureBox x:Name="canvas"></aforge:PictureBox>
+            </WindowsFormsHost>
+            <StackPanel Orientation="Vertical" Grid.Column="1" Background="AliceBlue">
+                <Button Content="采集"  Width="40" Height="30" Click="Capture_Click"></Button>
+                <Button Content="采集"  Height="30"></Button>
+                <Button Content="采集" Height="30"></Button>
+                <Button Content="采集"  Height="30"></Button>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" ScrollChanged="ScrollViewer_ScrollChanged">
+            <StackPanel Orientation="Horizontal"  Background="AliceBlue" Name="bottom_image">
+                <Grid x:Name="tt">
+                    <Image></Image>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>-->
     </Grid>
 </Window>

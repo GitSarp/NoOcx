@@ -38,11 +38,12 @@ namespace NOocx
         
         private List<ScanImage> fileList = new List<ScanImage>();//采集项列表
         private int currFileIndex = 0;//选中的采集项索引，默认第一项
-        private List<System.Windows.Controls.Image> thumbnaillist = new List<System.Windows.Controls.Image>();//底部缩略图列表
-        private List<Label> lablelist = new List<Label>();//底部缩略图列表
+        //private List<System.Windows.Controls.Image> thumbnaillist = new List<System.Windows.Controls.Image>();//底部缩略图列表
+        //private List<Label> lablelist = new List<Label>();//底部缩略图列表
         private Dictionary<int, List<Bitmap>> imageMemorys = new Dictionary<int, List<Bitmap>>();//所有图像缓存，<image_no,bitmaplist>
         private BitmapImage myBitmapImage = new BitmapImage();//选中的图像缓存
 
+        //业务接口
         ScanIni scanIni;
         string url;//请求xml的主机
         string token;//获取xml的key
@@ -73,28 +74,26 @@ namespace NOocx
                 errorOccurs = true;//置异常标志
                 Close();
             }
-
             //下载图片，可能需要完善
             scanDownload.scanInfo = scanInfo;
             scanDownload.scanIni = scanIni;
             if (scanDownload.needDown())
                 scanDownload.downImage();
 
-            init();//初始化
+            initUI();//初始化界面
             getVideoIndex(fileList[currFileIndex].videosourceName);
             if (videoIndex == -1)
                 videoIndex = 0;
             videoMenu.SelectedIndex = videoIndex;
         }
-
-        //初始化界面
-        private void init()
+        private void initUI()
         {
             videoDevices = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             if (videoDevices.Count == 0)
             {
                 System.Windows.MessageBox.Show("无可用视频输入设备，程序自动结束...");
-                //
+                errorOccurs = true;//置异常标志
+                Close();
             }
             //枚举所有输入设备名称
             //for (int i = 0; i < videoDevices.Count; i++)
@@ -106,7 +105,11 @@ namespace NOocx
                 //tmpMI.Header = device.Name;
                 //videoMenu.Items.Add(tmpMI);
             }
-            //绘制底部界面
+            InitBottom();
+        }
+        //绘制底部界面
+        private void InitBottom()
+        {
             foreach (ScanImage scanfile in fileList)
             {
                 Grid smallPic = new Grid();
@@ -120,7 +123,6 @@ namespace NOocx
                 {
                     tmpImg.ToolTip += "100KB";//测试写死
                 }
-                thumbnaillist.Add(tmpImg);//添加到list中，鼠标滚动时访问
                 smallPic.Children.Add(tmpImg);
                 Label tmpLb = new Label();
                 tmpLb.Content = scanfile.fileName;
@@ -128,13 +130,13 @@ namespace NOocx
                 tmpLb.BorderThickness = new Thickness(1);
                 if (tmpImg.Visibility == Visibility.Visible)
                     tmpLb.Visibility = Visibility.Hidden;
-                lablelist.Add(tmpLb);
                 smallPic.MouseLeftButtonDown += image_MouseLeftButtonDown;
                 smallPic.Name = scanfile.fileName;
                 smallPic.Children.Add(tmpLb);
                 bottom_image.Children.Add(smallPic);
             }
         }
+
 
         //切换视频源
         private void videoMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -143,7 +145,6 @@ namespace NOocx
             goPikachu();
             fileList[currFileIndex].videosourceName = videoMenu.SelectedItem.ToString();//置摄入设备名称，切换和保存 
         }
-
         //取摄像头实例、摄像头索引和分辨率索引
         private void getDevice(int fileIndex,string videoName="")
         {
@@ -200,7 +201,6 @@ namespace NOocx
             videoIndex = -1;
             return;
         }
-
         //开始拍摄
         private void goPikachu()
         {
@@ -217,7 +217,6 @@ namespace NOocx
             }
             mediaType.SelectedIndex = resolutionIndex;
         }
-
         //切换分辨率
         private void mediaType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -242,17 +241,21 @@ namespace NOocx
                 myBitmapImage.UriSource = new Uri(System.Windows.Forms.Application.StartupPath + "\\test.jpg");
                 myBitmapImage.DecodePixelWidth = 40;
                 myBitmapImage.EndInit();
-                System.Windows.Controls.Image tmpImg = thumbnaillist[currFileIndex] as System.Windows.Controls.Image;
-                tmpImg.Source = myBitmapImage;
-                tmpImg.Visibility = Visibility.Visible;
-                Label tmpLb = lablelist[currFileIndex] as Label;
-                tmpLb.Visibility = Visibility.Hidden;
-                currfileName.Content = tmpLb.Content;
+                System.Windows.Controls.Image currImageCtl = (System.Windows.Controls.Image)getUICom(this.Name);
+                currImageCtl.Source = myBitmapImage;
+                ((Label)getUICom(Name)).Visibility = Visibility.Hidden;
+                currImageCtl.Visibility = Visibility.Visible;
+                currfileName.Content = currImageCtl.Name;
                 //显示图片
                 showImage(System.Windows.Forms.Application.StartupPath + "\\test.jpg");
                 //切换界面
                 switchwindow(0);
             }
+        }
+        //反射获取UI组件
+        private Object getUICom(string Name)
+        {
+            return this.GetType().GetField(Name, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.IgnoreCase).GetValue(this);
         }
         //显示图片及信息
         private void showImage(string filepath)
@@ -279,9 +282,9 @@ namespace NOocx
             }
         }
         //切换界面，0：从视频切换到图像，1：从图像切换到视频
-        private void switchwindow(int action)
+        private void switchwindow(int flag)
         {
-            if (action == 0)
+            if (flag == 0)
             {
                 wfhost.Visibility = Visibility.Hidden;
                 canvashost.Visibility = Visibility.Visible;
@@ -311,7 +314,7 @@ namespace NOocx
                 }
             }else
             {
-                if((nextFile.videorpic == 0) && (!imageMemorys.ContainsKey(nextFile.image_no))
+                //if((nextFile.videorpic == 0) && (!imageMemorys.ContainsKey(nextFile.image_no))
             }
             //if()
             if (canvashost.Visibility == Visibility.Visible)
