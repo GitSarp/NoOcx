@@ -1,0 +1,29 @@
+﻿<Window x:Class="OptypeSyncUtil.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OptypeSyncUtil"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="600" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Grid>
+        <Label x:Name="label_Copy" Content="1、更新源/目标文件，修改文件目录(可选)：" HorizontalAlignment="Left" Height="27" Margin="35,18,0,0" VerticalAlignment="Top" Width="402"/>
+        <TextBox x:Name="srcdirT"  IsReadOnly="True" HorizontalAlignment="Left" Height="39" Margin="47,56,0,0" TextWrapping="Wrap" Text="源文件目录" VerticalAlignment="Top" Width="158"/>
+        <TextBox x:Name="tardirT" IsReadOnly="True" Height="39" Margin="294,56,148,0" TextWrapping="Wrap" Text="目标文件目录" VerticalAlignment="Top"/>
+        <!--button1_Click-->
+        <Button x:Name="button1"  Content="浏览..." HorizontalAlignment="Left" Height="18" Margin="219,56,0,0" VerticalAlignment="Top" Width="69" Click="button1_Click_1"/>
+        <!--button2_Click-->
+        <Button x:Name="button2"  Content="浏览..." HorizontalAlignment="Left" Height="18" Margin="458,55,0,0" VerticalAlignment="Top" Width="73" Click="button2_Click_1"/>
+        <Label x:Name="label" Content="2、输入要同步的操作类型（逗号空格或、分开）：" HorizontalAlignment="Left" Height="27" Margin="35,111,0,0" VerticalAlignment="Top" Width="289"/>
+        <TextBox x:Name="optypes" HorizontalAlignment="Left" Height="69" Margin="47,143,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352"/>
+
+        <Label x:Name="label_Copy1" Content="3、依次输入本次修改单和修改人：" HorizontalAlignment="Left" Height="27" Margin="35,224,0,0" VerticalAlignment="Top" Width="245"/>
+        <TextBox x:Name="modor" HorizontalAlignment="Left" Height="27" Margin="47,270,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="121"/>
+        <TextBox x:Name="moder" HorizontalAlignment="Left" Height="28" Margin="188,270,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="101"/>
+        <Button x:Name="button" Content="OK" HorizontalAlignment="Left" Height="34" Margin="339,268,0,0" VerticalAlignment="Top" Width="82" Click="button_Click"/>
+
+        <!--下面的弃用-->
+        <Label x:Name="label1" Visibility="Collapsed" Content="scanoptype.cdata" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.289,2.044" Margin="39,56,0,0"/>
+        <Label x:Name="label1_Copy" Visibility="Collapsed" Content="archoptype.cdata" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.289,2.044" Margin="232,56,0,0"/>
+    </Grid>
+</Window>
